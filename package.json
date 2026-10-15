@@ -20,7 +20,8 @@
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
     "db:init": "node src/db/init.js",
-    "test": "node --test"
+    "test": "node --test",
+    "import": "node src/importer/index.js"
   },
   "dependencies": {
     "csv-parse": "^7.0.3",
