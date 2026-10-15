@@ -77,3 +77,54 @@ Datos faltantes que se pueden recuperar: si `tasa_cif_cantidad_fraccion` viene v
 ```bash
 npm test
 ```
+
+## API REST
+
+```bash
+npm start      # o "npm run dev" para reiniciar al guardar cambios
+```
+
+| Método | Ruta | Descripción |
+|---|---|---|
+| GET | `/importaciones?page=1&limit=20` | Lista todas las importaciones (ítems con los datos de su póliza), paginadas. `limit` máximo 100. |
+| GET | `/importaciones/{correlativo}` | Una póliza con sus ítems y totales (CIF y DAI). |
+| GET | `/importaciones/sac/{sac}?page=1&limit=20` | Importaciones de una partida arancelaria (SAC), paginadas. |
+| GET | `/estadisticas/por-pais` | Por país: pólizas, ítems, CIF en USD y en GTQ, y DAI total. |
+| GET | `/estadisticas/por-aduana` | Mismo resumen agrupado por aduana. |
+
+> **Decisión de diseño:** el enunciado pide `/importaciones/{correlativo}` y `/importaciones/{sac}`, pero las dos rutas tienen la misma forma y Express no puede distinguirlas (los dos valores son numéricos). Por eso la consulta por SAC quedó en `/importaciones/sac/{sac}`.
+
+Ejemplo de listado paginado:
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "correlativo": "32642260",
+      "fecha_declaracion": "2023-08-30",
+      "aduana": "Aduana Integrada Agua Caliente",
+      "tipo_regimen": "ID Importación Definitiva",
+      "tipo_cambio_dolar": 7.8715,
+      "sac": "8504400000",
+      "descripcion": "DISPOSITIVO SOLAR 03-62-1000-2-41-AT",
+      "pais": "CHINA",
+      "tipo_unidad_medida": "PIEZAS",
+      "cantidad_fraccion": 1,
+      "tasa_dai": 0,
+      "valor_dai": 0,
+      "valor_cif_uds": 670.78,
+      "tasa_cif_cantidad_fraccion": 670.780029
+    }
+  ],
+  "paginacion": { "page": 1, "limit": 20, "total": 20, "totalPages": 1 }
+}
+```
+
+Errores:
+
+| Código | Caso |
+|---|---|
+| 400 | `page`/`limit` inválidos, SAC con letras, correlativo con caracteres no permitidos |
+| 404 | Póliza inexistente o ruta no encontrada |
+| 500 | Error inesperado (el detalle solo se registra en la consola del servidor) |
