@@ -8,6 +8,7 @@ const METRICAS = `
   ROUND(SUM(i.valor_cif_uds * p.tipo_cambio_dolar), 2)    AS total_cif_gtq,
   ROUND(COALESCE(SUM(i.valor_dai), 0), 2)                 AS total_dai`;
 
+// Agrupado por país, de mayor a menor CIF
 async function porPais() {
   const { rows } = await pool.query(`
     SELECT i.pais, ${METRICAS}
@@ -18,6 +19,7 @@ async function porPais() {
   return rows;
 }
 
+// Agrupado por aduana (dato de la póliza), de mayor a menor CIF
 async function porAduana() {
   const { rows } = await pool.query(`
     SELECT p.aduana, ${METRICAS}

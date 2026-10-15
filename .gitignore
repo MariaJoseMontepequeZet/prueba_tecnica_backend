@@ -6,6 +6,7 @@ node_modules/
 
 # Datos: el CSV completo es muy pesado para el repositorio
 data/*.csv
+docs/*.csv
 !data/muestra_polizas.csv
 
 # Metadatos de macOS / logs

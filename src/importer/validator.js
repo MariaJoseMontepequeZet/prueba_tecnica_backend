@@ -5,11 +5,13 @@ const COLUMNAS = [
   'tasa_dai', 'valor_dai', 'valor_cif_uds', 'tasa_cif_cantidad_fraccion',
 ];
 
+// Campos sin los cuales la fila se rechaza
 const OBLIGATORIOS = [
   'correlativo', 'fecha_declaracion', 'aduana', 'tipo_regimen', 'tipo_cambio_dolar',
   'sac', 'pais', 'cantidad_fraccion', 'valor_cif_uds',
 ];
 
+// Campos que se convierten de texto a número
 const NUMERICOS = [
   'tipo_cambio_dolar', 'cantidad_fraccion', 'tasa_dai',
   'valor_dai', 'valor_cif_uds', 'tasa_cif_cantidad_fraccion',
@@ -42,6 +44,7 @@ function parseNumero(valor) {
  * Devuelve { ok: true, datos } o { ok: false, errores: [...] }.
  */
 function validarFila(campos) {
+  // Una fila con columnas de más o de menos no se puede interpretar
   if (campos.length !== COLUMNAS.length) {
     return { ok: false, errores: [`Se esperaban ${COLUMNAS.length} columnas y llegaron ${campos.length}`] };
   }
@@ -51,20 +54,24 @@ function validarFila(campos) {
   // Limpia espacios extra de cada campo
   COLUMNAS.forEach((col, i) => { datos[col] = String(campos[i]).trim().replace(/\s+/g, ' '); });
 
+  // 1. Campos obligatorios
   for (const col of OBLIGATORIOS) {
     if (datos[col] === '') errores.push(`Campo obligatorio vacío: ${col}`);
   }
 
+  // 2. Fecha válida (se normaliza a YYYY-MM-DD)
   if (datos.fecha_declaracion !== '') {
     const fecha = parseFecha(datos.fecha_declaracion);
     if (!fecha) errores.push(`Fecha inválida: "${datos.fecha_declaracion}"`);
     datos.fecha_declaracion = fecha;
   }
 
+  // 3. SAC (partida arancelaria): solo dígitos
   if (datos.sac !== '' && !/^\d{1,12}$/.test(datos.sac)) {
     errores.push(`SAC inválido: "${datos.sac}"`);
   }
 
+  // 4. Números válidos y no negativos
   for (const col of NUMERICOS) {
     const original = datos[col];
     const n = parseNumero(original);
@@ -75,6 +82,7 @@ function validarFila(campos) {
 
   if (datos.tipo_cambio_dolar === 0) errores.push('tipo_cambio_dolar debe ser mayor a 0');
 
+  // Con cualquier error la fila se rechaza
   if (errores.length > 0) return { ok: false, errores };
 
   // Dato faltante recuperable: la proporción CIF se puede calcular

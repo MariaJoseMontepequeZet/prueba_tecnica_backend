@@ -3,11 +3,12 @@ const pool = require('../config/db');
 // Cada importación es un ítem con los datos de cabecera de su póliza
 const SELECT_IMPORTACION = `
   SELECT i.id, p.correlativo, p.fecha_declaracion, p.aduana, p.tipo_regimen, p.tipo_cambio_dolar,
-         i.sac, i.descripcion, i.pais, i.tipo_unidad_medida, i.cantidad_fraccion,
-         i.tasa_dai, i.valor_dai, i.valor_cif_uds, i.tasa_cif_cantidad_fraccion
+        i.sac, i.descripcion, i.pais, i.tipo_unidad_medida, i.cantidad_fraccion,
+        i.tasa_dai, i.valor_dai, i.valor_cif_uds, i.tasa_cif_cantidad_fraccion
   FROM items i
   JOIN polizas p ON p.correlativo = i.correlativo`;
 
+// Página de datos y total en paralelo; $1, $2 son parámetros (evitan inyección SQL)
 async function listar({ limit, offset }) {
   const [filas, conteo] = await Promise.all([
     pool.query(`${SELECT_IMPORTACION} ORDER BY i.id LIMIT $1 OFFSET $2`, [limit, offset]),
@@ -24,10 +25,11 @@ async function obtenerPorCorrelativo(correlativo) {
   const items = await pool.query(
     `SELECT id, sac, descripcion, pais, tipo_unidad_medida, cantidad_fraccion,
             tasa_dai, valor_dai, valor_cif_uds, tasa_cif_cantidad_fraccion
-     FROM items WHERE correlativo = $1 ORDER BY id`,
+    FROM items WHERE correlativo = $1 ORDER BY id`,
     [correlativo],
   );
 
+  // Totales de la póliza a partir de sus ítems
   const totales = items.rows.reduce(
     (acc, it) => ({
       total_items: acc.total_items + 1,

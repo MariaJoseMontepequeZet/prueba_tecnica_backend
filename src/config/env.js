@@ -10,5 +10,5 @@ module.exports = {
     user: process.env.DB_USER || 'postgres',
     password: process.env.DB_PASSWORD,
   },
-  csvPath: process.env.CSV_PATH || 'data/polizas_full.csv',
+  csvPath: process.env.CSV_PATH || 'docs/polizas_full.csv',
 };
