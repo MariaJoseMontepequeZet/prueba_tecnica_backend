@@ -27,8 +27,8 @@ async function guardarLote(client, items, polizasNuevas) {
       // UNNEST permite insertar miles de filas con una sola consulta y pocos parámetros
       await client.query(
         `INSERT INTO polizas (correlativo, fecha_declaracion, aduana, tipo_regimen, tipo_cambio_dolar)
-         SELECT * FROM UNNEST($1::varchar[], $2::date[], $3::varchar[], $4::varchar[], $5::numeric[])
-         ON CONFLICT (correlativo) DO NOTHING`,
+          SELECT * FROM UNNEST($1::varchar[], $2::date[], $3::varchar[], $4::varchar[], $5::numeric[])
+          ON CONFLICT (correlativo) DO NOTHING`,
         ['correlativo', 'fecha_declaracion', 'aduana', 'tipo_regimen', 'tipo_cambio_dolar']
           .map((col) => polizasNuevas.map((p) => p[col])),
       );
@@ -62,6 +62,7 @@ async function guardarRechazos(client, rechazos) {
  * Lee el CSV por streaming (no carga el archivo completo en memoria),
  * valida cada fila y guarda en lotes. Las filas inválidas van a registros_rechazados.
  */
+
 async function importarCsv(ruta) {
   if (!fs.existsSync(ruta)) throw new Error(`No se encontró el archivo: ${ruta}`);
 
