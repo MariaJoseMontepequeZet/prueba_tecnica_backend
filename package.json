@@ -19,7 +19,8 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
-    "db:init": "node src/db/init.js"
+    "db:init": "node src/db/init.js",
+    "test": "node --test"
   },
   "dependencies": {
     "csv-parse": "^7.0.3",
