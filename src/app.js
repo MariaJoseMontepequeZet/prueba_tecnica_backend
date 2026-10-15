@@ -8,6 +8,7 @@ const app = express();
 app.use(express.json());
 
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
+// Rutas de la API
 app.use('/importaciones', importacionesRoutes);
 app.use('/estadisticas', estadisticasRoutes);
 

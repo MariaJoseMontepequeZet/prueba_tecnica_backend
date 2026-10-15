@@ -8,6 +8,7 @@ const SELECT_IMPORTACION = `
   FROM items i
   JOIN polizas p ON p.correlativo = i.correlativo`;
 
+// Página de datos y total en paralelo; $1, $2 son parámetros (evitan inyección SQL)
 async function listar({ limit, offset }) {
   const [filas, conteo] = await Promise.all([
     pool.query(`${SELECT_IMPORTACION} ORDER BY i.id LIMIT $1 OFFSET $2`, [limit, offset]),
@@ -28,6 +29,7 @@ async function obtenerPorCorrelativo(correlativo) {
     [correlativo],
   );
 
+  // Totales de la póliza a partir de sus ítems
   const totales = items.rows.reduce(
     (acc, it) => ({
       total_items: acc.total_items + 1,

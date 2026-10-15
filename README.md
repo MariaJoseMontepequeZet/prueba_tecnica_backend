@@ -128,3 +128,7 @@ Errores:
 | 400 | `page`/`limit` inválidos, SAC con letras, correlativo con caracteres no permitidos |
 | 404 | Póliza inexistente o ruta no encontrada |
 | 500 | Error inesperado (el detalle solo se registra en la consola del servidor) |
+
+## Colección de Bruno
+
+La carpeta `bruno/` tiene una colección con un llamado por endpoint, más los casos de error 400 y 404. Para usarla, en Bruno elige **Open Collection**, selecciona la carpeta `bruno/` y ejecuta los llamados con el servidor corriendo en `http://localhost:3000`.
