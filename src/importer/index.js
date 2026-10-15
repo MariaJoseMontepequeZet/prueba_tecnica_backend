@@ -20,7 +20,7 @@ async function main() {
 
 main()
   .catch((err) => {
-    console.error('Error en la importación:', err.message);
+    console.error('Error en la importación:', err.message || err.code);
     process.exitCode = 1;
   })
   // Cierra las conexiones para que el proceso termine

@@ -26,6 +26,6 @@ async function init() {
 }
 
 init().catch((err) => {
-  console.error('Error al inicializar la base de datos:', err.message);
+  console.error('Error al inicializar la base de datos:', err.message || err.code);
   process.exit(1);
 });
