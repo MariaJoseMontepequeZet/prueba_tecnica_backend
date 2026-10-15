@@ -1,0 +1,32 @@
+{
+  "name": "prueba-tecnica-backend",
+  "version": "1.0.0",
+  "description": "API REST para procesar y consultar pólizas de importación desde un CSV",
+  "homepage": "https://github.com/MariaJoseMontepequeZet/prueba_tecnica_backend#readme",
+  "bugs": {
+    "url": "https://github.com/MariaJoseMontepequeZet/prueba_tecnica_backend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MariaJoseMontepequeZet/prueba_tecnica_backend.git"
+  },
+  "license": "ISC",
+  "author": "maria-montepeque",
+  "main": "src/server.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "db:init": "node src/db/init.js",
+    "test": "node --test",
+    "import": "node src/importer/index.js"
+  },
+  "dependencies": {
+    "csv-parse": "^7.0.3",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "pg": "^8.16.0"
+  }
+}
