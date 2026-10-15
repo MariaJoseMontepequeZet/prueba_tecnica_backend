@@ -45,7 +45,7 @@ Se separó la cabecera de los ítems porque un mismo `correlativo` aparece en va
 
 ## Procesamiento del CSV
 
-Copiar el archivo completo a `data/polizas_full.csv` (está en `.gitignore` por su tamaño) y ejecutar:
+El archivo completo va en `docs/polizas_full.csv` (está en `.gitignore` porque supera el límite de 100 MB de GitHub) y ejecutar:
 
 ```bash
 npm run import                               # usa CSV_PATH del .env
