@@ -3,8 +3,8 @@ const pool = require('../config/db');
 // Cada importación es un ítem con los datos de cabecera de su póliza
 const SELECT_IMPORTACION = `
   SELECT i.id, p.correlativo, p.fecha_declaracion, p.aduana, p.tipo_regimen, p.tipo_cambio_dolar,
-         i.sac, i.descripcion, i.pais, i.tipo_unidad_medida, i.cantidad_fraccion,
-         i.tasa_dai, i.valor_dai, i.valor_cif_uds, i.tasa_cif_cantidad_fraccion
+        i.sac, i.descripcion, i.pais, i.tipo_unidad_medida, i.cantidad_fraccion,
+        i.tasa_dai, i.valor_dai, i.valor_cif_uds, i.tasa_cif_cantidad_fraccion
   FROM items i
   JOIN polizas p ON p.correlativo = i.correlativo`;
 
@@ -25,7 +25,7 @@ async function obtenerPorCorrelativo(correlativo) {
   const items = await pool.query(
     `SELECT id, sac, descripcion, pais, tipo_unidad_medida, cantidad_fraccion,
             tasa_dai, valor_dai, valor_cif_uds, tasa_cif_cantidad_fraccion
-     FROM items WHERE correlativo = $1 ORDER BY id`,
+    FROM items WHERE correlativo = $1 ORDER BY id`,
     [correlativo],
   );
 
