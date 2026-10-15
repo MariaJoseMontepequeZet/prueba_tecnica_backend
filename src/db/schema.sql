@@ -12,8 +12,8 @@ DROP TABLE IF EXISTS registros_rechazados;
 CREATE TABLE polizas (
     correlativo VARCHAR(20) PRIMARY KEY,
     fecha_declaracion DATE NOT NULL,
-    aduana VARCHAR(100) NOT NULL,
-    tipo_regimen VARCHAR(100) NOT NULL,
+    aduana TEXT NOT NULL,
+    tipo_regimen TEXT NOT NULL,
     tipo_cambio_dolar NUMERIC(10, 4) NOT NULL CHECK (tipo_cambio_dolar > 0)
 );
 
@@ -23,7 +23,7 @@ CREATE TABLE items (
     correlativo VARCHAR(20) NOT NULL REFERENCES polizas (correlativo) ON DELETE CASCADE,
     sac VARCHAR(12) NOT NULL, -- texto para no perder ceros a la izquierda
     descripcion TEXT,
-    pais VARCHAR(100) NOT NULL,
+    pais TEXT NOT NULL,
     tipo_unidad_medida VARCHAR(30),
     cantidad_fraccion NUMERIC(18, 4) NOT NULL CHECK (cantidad_fraccion >= 0),
     tasa_dai NUMERIC(6, 2) CHECK (tasa_dai >= 0),
