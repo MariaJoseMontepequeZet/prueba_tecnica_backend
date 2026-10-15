@@ -28,3 +28,17 @@ src/
 ├── app.js         # configuración de Express
 └── server.js      # punto de entrada
 ```
+
+## Base de datos
+
+```bash
+npm run db:init   # crea la BD (si no existe) y las tablas
+```
+
+| Tabla | Descripción |
+|---|---|
+| `polizas` | Cabecera de cada póliza: `correlativo` (PK), fecha, aduana, régimen y tipo de cambio. |
+| `items` | Cada fila del CSV: SAC, descripción, país, cantidades y valores. FK a `polizas`. |
+| `registros_rechazados` | Filas del CSV que no pasaron la validación, con la línea y el motivo. |
+
+Se separó la cabecera de los ítems porque un mismo `correlativo` aparece en varias filas con los mismos datos de póliza; así no se repiten y se evita inconsistencia. El `sac` se guarda como texto para no perder ceros a la izquierda.
