@@ -4,6 +4,7 @@ const { csvPath } = require('../config/env');
 
 // Uso: npm run import [-- ruta/al/archivo.csv]
 async function main() {
+  // Ruta por argumento o, si no se envía, la del .env
   const ruta = process.argv[2] || csvPath;
   console.log(`Importando ${ruta}...`);
   const inicio = Date.now();
@@ -22,4 +23,5 @@ main()
     console.error('Error en la importación:', err.message);
     process.exitCode = 1;
   })
+  // Cierra las conexiones para que el proceso termine
   .finally(() => pool.end());

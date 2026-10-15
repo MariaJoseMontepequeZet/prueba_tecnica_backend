@@ -10,6 +10,7 @@ async function init() {
   await admin.connect();
   const { rowCount } = await admin.query('SELECT 1 FROM pg_database WHERE datname = $1', [db.database]);
   if (rowCount === 0) {
+    // CREATE DATABASE no acepta parámetros ($1), por eso el nombre va entre comillas
     await admin.query(`CREATE DATABASE "${db.database}"`);
     console.log(`Base de datos "${db.database}" creada`);
   }
