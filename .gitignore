@@ -1,0 +1,14 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno (credenciales)
+.env
+
+# Datos: el CSV completo es muy pesado para el repositorio
+data/*.csv
+!data/muestra_polizas.csv
+
+# Metadatos de macOS / logs
+._*
+.DS_Store
+*.log
