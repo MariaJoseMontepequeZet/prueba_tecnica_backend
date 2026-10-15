@@ -1,0 +1,18 @@
+info:
+  name: Listar importaciones
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: http://localhost:3000/importaciones?page=1&limit=10
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
+
+docs: Lista paginada de importaciones. limit máximo 100.
